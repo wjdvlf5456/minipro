@@ -47,6 +47,8 @@ public class PersonApp {
 			fList.add(person);
 
 		}
+		
+		//메모장 불러오기
 		Writer fw = new FileWriter("./PhoneDB.txt");
 		BufferedWriter bw = new BufferedWriter(fw);
 
