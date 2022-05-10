@@ -22,7 +22,7 @@ public class PersonApp {
 		BufferedReader br = new BufferedReader(fr);
 		BufferedReader brr = new BufferedReader(new InputStreamReader(System.in));
 		Writer fw = new FileWriter(
-				"/Users/choijungphil/javaStudy/workspace/minipro/src/com/javaex/phonebook/PhoneDB.txt");
+				"/Users/choijungphil/javaStudy/workspace/minipro/src/com/javaex/phonebook/PhoneDB_결과.txt", true);
 		BufferedWriter bw = new BufferedWriter(fw);
 
 		// 프로그램 시작
@@ -48,6 +48,7 @@ public class PersonApp {
 			fList.add(person);
 
 		}
+
 		while (true) {
 			int i = 1;
 			System.out.println("");
@@ -56,6 +57,7 @@ public class PersonApp {
 			System.out.print("<메뉴번호: ");
 			String contents = brr.readLine();
 			int active = Integer.parseInt(contents);
+
 			// ---------5.종료------------
 			if (active == 5) {
 				System.out.println("*******************************************");
@@ -113,20 +115,22 @@ public class PersonApp {
 					}
 					i++;
 				}
-				// ------------ 재입력 ------------
 
+				// ------------ 재입력 ------------
 			} else {
 				System.out.println("[다시 입력해 주세요]");
 			}
+
 			for (Person person : fList) {
 				String savestr = person.getName() + "," + person.getHp() + "," + person.getCompany();
 
 				bw.write(savestr);
 				bw.newLine();
-
+				bw.flush();
 			}
 
 		}
+		// while문 끝
 
 		bw.close();
 		br.close();
