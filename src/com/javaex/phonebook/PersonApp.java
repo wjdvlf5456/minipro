@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonApp {
-	
 
 	public static void main(String[] args) throws IOException {
 
@@ -136,8 +135,4 @@ public class PersonApp {
 
 	}
 
-	public static void run(List<Person>aPersons) {
-		
-		
-	}
 }
