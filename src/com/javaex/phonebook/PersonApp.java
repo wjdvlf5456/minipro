@@ -2,10 +2,13 @@ package com.javaex.phonebook;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -44,11 +47,11 @@ public class PersonApp {
 			fList.add(person);
 
 		}
-
 		Writer fw = new FileWriter("./PhoneDB.txt");
 		BufferedWriter bw = new BufferedWriter(fw);
 
 		while (true) {
+			
 			int i = 1;
 			System.out.println("");
 			System.out.println("1.리스트  2.등록  3.삭제  4.검색  5.종료");
@@ -72,14 +75,15 @@ public class PersonApp {
 					person.showList();
 					i++;
 				}
+				change(fList);
 				// ------------ 2.등록 ------------
 			} else if (active == 2) {
 				System.out.println("<2.등록>");
 				System.out.print(">이름: ");
 				String name = brr.readLine();
 
-				System.out.print(">휴대전화: ");
 				String hp = brr.readLine();
+				System.out.print(">휴대전화: ");
 
 				System.out.print(">회사전화: ");
 				String company = brr.readLine();
@@ -87,6 +91,7 @@ public class PersonApp {
 
 				Person person = new Person(name, hp, company);
 				fList.add(person);
+				change(fList);
 
 				// ------------ 3.삭제 ------------
 			} else if (active == 3) {
@@ -95,6 +100,7 @@ public class PersonApp {
 				String delete = brr.readLine();
 				int deleteNumber = Integer.parseInt(delete) - 1;
 				fList.remove(deleteNumber);
+				change(fList);
 
 				// ------------ 4.검색 ------------
 			} else if (active == 4) {
@@ -105,7 +111,7 @@ public class PersonApp {
 
 				for (Person person : fList) {
 					String pName = person.getName();
-					char cn1 = pName.charAt(0);
+					char cn1 = pName.charAt(0);		// 이
 					char cn2 = pName.charAt(1);
 					char cn3 = pName.charAt(2);
 					if (cSearch == cn1 || cSearch == cn2 || cSearch == cn3) {
@@ -114,24 +120,42 @@ public class PersonApp {
 					}
 					i++;
 				}
+				change(fList);
 
 				// ------------ 재입력 ------------
 			} else {
 				System.out.println("[다시 입력해 주세요]");
+				change(fList);
 			}
-
 		}
 		for (Person person : fList) {
 			String savestr = person.getName() + "," + person.getHp() + "," + person.getCompany();
 
 			bw.write(savestr);
 			bw.newLine();
-			bw.flush();
 		}
 		// while문 끝
-
 		bw.close();
 		br.close();
+
+	}
+
+	// 실시간으로 반영하기 위한 전역변수
+	public static void change(List<Person> fList) throws IOException {
+		OutputStream os = new FileOutputStream("./PhoneDB.txt");
+		OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+		BufferedWriter bw = new BufferedWriter(osw);
+
+		for (Person person : fList) {
+			String savestr = person.getName() + "," + person.getHp() + "," + person.getCompany();
+
+			bw.write(savestr);
+			bw.newLine();
+
+		}
+
+		bw.flush();
+		bw.close();
 
 	}
 
