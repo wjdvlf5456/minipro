@@ -12,6 +12,7 @@ public class Person {
 		this.name = name;
 		this.hp = hp;
 		this.company = company;
+		
 	}
 
 	// 메소드 - gs
@@ -38,6 +39,7 @@ public class Person {
 	public void setCompany(String company) {
 		this.company = company;
 	}
+
 
 	// 메소드 - 일반
 	public void showList() {
